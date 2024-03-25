@@ -11,8 +11,7 @@ import AVFoundation
 import CoreImage
 import Darwin
 import Foundation
-import UIKit
-import onnxruntime_objc
+import OnnxRuntimeBindings
 
 
 

@@ -7,7 +7,7 @@
 
 import Foundation
 import AVFAudio
-import onnxruntime_objc
+import OnnxRuntimeBindings
 
 enum DetectMode {
     case Chunk
