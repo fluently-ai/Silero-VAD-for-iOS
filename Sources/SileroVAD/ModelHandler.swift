@@ -58,42 +58,28 @@ class ModelHandler: NSObject {
     private var env: ORTEnv
     
     init?(modelFilename: String, modelExtension: String, threadCount: Int32 = 1) {
-        guard let associateBundleURL2 = Bundle.main.url(forResource: "Silero_VAD_for_iOS", withExtension: "bundle") else {
-            return nil
-        }
-        
-        guard let podBundle = Bundle(url: associateBundleURL2) else {
-            return nil
-        }
-        
-        guard let modelPath = podBundle.path(forResource: modelFilename, ofType: modelExtension) else {
-            print("Failed to get model file path with name: \(modelFilename).")
-            return nil
-        }
-        
-        
-        
-        self.threadCount = threadCount
-        do {
-            env = try ORTEnv(loggingLevel: ORTLoggingLevel.warning)
-            let options = try ORTSessionOptions()
-            try options.setLogSeverityLevel(ORTLoggingLevel.warning)
-            try options.setIntraOpNumThreads(threadCount)
-            session = try ORTSession(env: env, modelPath: modelPath, sessionOptions: options)
-        } catch {
-            print("Failed to create ORTSession.")
-            return nil
-        }
-        
-        super.init()
+      guard let modelPath = Bundle.module.path(forResource: modelFilename, ofType: modelExtension) else {
+        print("Failed to get model file path with name: \(modelFilename).")
+        return nil
+      }
+      
+      
+      
+      self.threadCount = threadCount
+      do {
+        env = try ORTEnv(loggingLevel: ORTLoggingLevel.warning)
+        let options = try ORTSessionOptions()
+        try options.setLogSeverityLevel(ORTLoggingLevel.warning)
+        try options.setIntraOpNumThreads(threadCount)
+        session = try ORTSession(env: env, modelPath: modelPath, sessionOptions: options)
+      } catch {
+        print("Failed to create ORTSession.")
+        return nil
+      }
+      
+      super.init()
     }
-    
-    
-    
-
-    
-
-    
+  
     func parameterCheck(batchSize: Int, sr: Int) {
         guard _last_batch_size == batchSize,
               _last_sr == sr else {

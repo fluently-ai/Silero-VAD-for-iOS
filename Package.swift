@@ -2,15 +2,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "Silero-VAD-for-iOS",
+    name: "SileroVAD",
     platforms: [
         .iOS(.v13),
         .macOS(.v11)
     ],
     products: [
         .library(
-            name: "Silero-VAD-for-iOS",
-            targets: ["Silero-VAD-for-iOS"]
+            name: "SileroVAD",
+            targets: ["SileroVAD"]
         )
     ],
     dependencies: [
@@ -22,9 +22,10 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Silero-VAD-for-iOS",
+            name: "SileroVAD",
             dependencies: ["onnxruntime"],
-            path: "Silero-VAD-for-iOS/Classes"
+            resources: [.process("Resources")]
         )
-    ]
+    ],
+    swiftLanguageVersions: [.v5]
 )
